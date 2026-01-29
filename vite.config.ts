@@ -28,8 +28,8 @@ export default defineConfig(({ mode }) => {
           lib: {
             entry: resolve(__dirname, 'src/widget.tsx'),
             name: 'AuthModalWidget',
-            fileName: 'auth-widget',
-            formats: ['iife'],
+            fileName: () => 'auth-widget.js',
+            formats: ['umd'],
           },
           outDir: 'dist-widget',
           // Bundle everything including React

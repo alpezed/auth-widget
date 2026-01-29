@@ -57,7 +57,7 @@ Include the script and use the global `window.AuthModalWidget` API:
   <button onclick="window.AuthModalWidget.openSignUp()">Sign Up</button>
 
   <!-- Include the widget (single file, includes CSS) -->
-  <script src="path/to/auth-widget.iife.js"></script>
+  <script src="path/to/auth-widget.js"></script>
   
   <script>
     // Configure callbacks
@@ -189,7 +189,7 @@ After running `bun run build:widget`, you'll find:
 
 ```
 dist-widget/
-└── auth-widget.iife.js    # Single file bundle (~238KB, ~76KB gzipped)
+└── auth-widget.js    # Single file bundle (~238KB, ~76KB gzipped)
 ```
 
 The bundle includes:
