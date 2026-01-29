@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => {
             fileName: () => 'auth-widget.js',
             formats: ['umd'],
           },
-          outDir: 'dist-widget',
+          outDir: 'dist',
           // Bundle everything including React
           rollupOptions: {
             output: {

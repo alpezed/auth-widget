@@ -185,17 +185,39 @@ The widget automatically supports dark mode via `prefers-color-scheme: dark` med
 
 ## Build Output
 
-After running `bun run build:widget`, you'll find:
+After running `bun run build`, the widget is built into the same `dist/` folder as the app:
 
 ```
-dist-widget/
-└── auth-widget.js    # Single file bundle (~238KB, ~76KB gzipped)
+dist/
+├── index.html        # Your app
+├── assets/           # App assets
+└── auth-widget.js    # Widget bundle (~238KB, ~76KB gzipped)
 ```
+
+To build only the widget locally: `bun run build:widget` (also outputs to `dist/`).
 
 The bundle includes:
 - React & ReactDOM (production build)
 - Radix UI Dialog
 - All CSS (injected at runtime)
+
+---
+
+## Production (Vercel)
+
+The default `build` script builds both the app and the widget, so on Vercel the widget is included in the deployment.
+
+**Widget URL in production:**  
+`https://your-project.vercel.app/auth-widget.js`
+
+Use it from any site:
+
+```html
+<script src="https://your-project.vercel.app/auth-widget.js"></script>
+<script>
+  window.AuthModalWidget.openSignIn();
+</script>
+```
 
 ---
 
