@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Widget - Example</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #9ca3af;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      box-shadow: 0 4px 14px -3px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px -3px rgba(99, 102, 241, 0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .code-example {
+      margin-top: 3rem;
+      text-align: left;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    .code-example h3 {
+      font-size: 1rem;
+      color: #9ca3af;
+      margin-bottom: 1rem;
+    }
+
+    pre {
+      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #e5e7eb;
+    }
+
+    .comment {
+      color: #6b7280;
+    }
+
+    .string {
+      color: #34d399;
+    }
+
+    .keyword {
+      color: #f472b6;
+    }
+
+    .function {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Auth Widget Demo</h1>
+    <p>
+      A beautiful, standalone authentication modal that works anywhere.
+      Just include the script and call the API.
+    </p>
+    
+    <div class="buttons">
+      <button class="btn-primary" onclick="window.AuthModalWidget.openSignUp()">
+        Create Account
+      </button>
+      <button class="btn-secondary" onclick="window.AuthModalWidget.openSignIn()">
+        Sign In
+      </button>
+    </div>
+
+    <div class="code-example">
+      <h3>Usage Example</h3>
+      <pre><code><span class="comment">// 1. Include the script</span>
+&lt;script src="<span class="string">dist-widget/auth-widget.iife.js</span>"&gt;&lt;/script&gt;
+
+<span class="comment">// 2. Configure callbacks (optional)</span>
+<span class="keyword">window</span>.AuthModalWidget.<span class="function">configure</span>({
+  <span class="function">onSignIn</span>: (data) => {
+    console.<span class="function">log</span>(<span class="string">'Sign in:'</span>, data.email);
+  },
+  <span class="function">onSignUp</span>: (data) => {
+    console.<span class="function">log</span>(<span class="string">'Sign up:'</span>, data.email, data.name);
+  },
+  <span class="function">onSocialLogin</span>: (provider) => {
+    console.<span class="function">log</span>(<span class="string">'Social login:'</span>, provider);
+  }
+});
+
+<span class="comment">// 3. Open modals</span>
+<span class="keyword">window</span>.AuthModalWidget.<span class="function">openSignIn</span>();
+<span class="keyword">window</span>.AuthModalWidget.<span class="function">openSignUp</span>();
+<span class="keyword">window</span>.AuthModalWidget.<span class="function">close</span>();</code></pre>
+    </div>
+  </div>
+
+  <!-- Load the widget -->
+  <script src="dist-widget/auth-widget.iife.js"></script>
+  
+  <script>
+    // Configure the widget with callbacks
+    window.AuthModalWidget.configure({
+      onSignIn: function(data) {
+        console.log('Sign in attempt:', data);
+        alert('Sign in with: ' + data.email);
+        window.AuthModalWidget.close();
+      },
+      onSignUp: function(data) {
+        console.log('Sign up attempt:', data);
+        alert('Sign up with: ' + data.email + ' (' + data.name + ')');
+        window.AuthModalWidget.close();
+      },
+      onForgotPassword: function(email) {
+        console.log('Forgot password for:', email);
+        alert('Password reset requested for: ' + (email || 'no email entered'));
+      },
+      onSocialLogin: function(provider) {
+        console.log('Social login with:', provider);
+        alert('Social login with: ' + provider);
+      },
+      onClose: function() {
+        console.log('Modal closed');
+      }
+    });
+  </script>
+</body>
+</html>
