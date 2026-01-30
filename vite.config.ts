@@ -30,6 +30,9 @@ export default defineConfig(({ mode }) => {
 					'process.env.FRONTEND_URL': JSON.stringify(
 						'https://auth-widget.pages.dev/'
 					),
+					'process.env.BETTER_AUTH_URL': JSON.stringify(
+						'https://auth-widget-0ni.pages.dev/'
+					),
 					'process.env.VITE_API_BASE_URL': JSON.stringify(
 						'https://auth-widget-0ni.pages.dev/'
 					),
