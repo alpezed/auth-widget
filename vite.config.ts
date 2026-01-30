@@ -20,13 +20,17 @@ export default defineConfig(({ mode }) => {
 			devServer({
 				entry: './src/routes/auth.ts',
 				// Only handle /auth/* in Hono; let Vite serve SPA (/, /about, etc.)
-				exclude: [/^(?!\/api)/, ...defaultOptions.exclude],
+				exclude: [/^(?!\/auth)/, ...defaultOptions.exclude],
 			}),
 		],
 		// Define process.env.NODE_ENV for browser compatibility
 		define: isWidgetBuild
 			? {
 					'process.env.NODE_ENV': JSON.stringify('production'),
+					'process.env.FRONTEND_URL': JSON.stringify('http://localhost:3000/'),
+					'process.env.VITE_API_BASE_URL': JSON.stringify(
+						'http://localhost:5173/'
+					),
 				}
 			: undefined,
 		build: isWidgetBuild

@@ -1,34 +1,30 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import 'dotenv/config';
 
 import { auth } from '../lib/auth';
 
+const FRONTEND_URL = process.env.FRONTEND_URL ?? 'http://localhost:3000/';
+
+if (!FRONTEND_URL) {
+	throw new Error('FRONTEND_URL is not set');
+}
+
 const app = new Hono();
 
-const allowedOrigins = [
-	process.env.FRONTEND_URL,
-	'https://auth-widget.pages.dev',
-	'http://localhost:3000',
-]
-	.filter(Boolean)
-	.map((o) => (o!.endsWith('/') ? o!.slice(0, -1) : o!));
-
 app.use(
-	'/api/auth/*',
+	'/auth/*', // or replace with "*" to enable cors for all routes
 	cors({
-		origin: (origin) => {
-			if (!origin) return allowedOrigins[0] ?? null;
-			const normalized = origin.endsWith('/') ? origin.slice(0, -1) : origin;
-			return allowedOrigins.includes(normalized) ? origin : null;
-		},
-		allowHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-		allowMethods: ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE'],
-		exposeHeaders: ['Content-Length', 'Set-Cookie'],
-		maxAge: 86400,
+		origin: FRONTEND_URL,
+		allowHeaders: ['Content-Type', 'Authorization'],
+		allowMethods: ['POST', 'GET', 'OPTIONS'],
+		exposeHeaders: ['Content-Length'],
+		maxAge: 600,
 		credentials: true,
 	})
 );
 
-app.all('/api/auth/*', (c) => auth.handler(c.req.raw));
+// Mount better-auth at /auth (matches basePath in auth config)
+app.all('/auth/*', c => auth.handler(c.req.raw));
 
 export default app;

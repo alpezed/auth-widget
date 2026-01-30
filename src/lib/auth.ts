@@ -1,18 +1,17 @@
 import { betterAuth } from 'better-auth';
 import { db } from '../db';
 
-const FRONTEND_URL = process.env.FRONTEND_URL ?? 'https://auth-widget.pages.dev';
-const BACKEND_URL = process.env.BACKEND_URL ?? 'https://auth-widget-0ni.pages.dev';
+const BETTER_AUTH_URL = process.env.BETTER_AUTH_URL ?? 'http://localhost:5173/';
+
+if (!BETTER_AUTH_URL) {
+	throw new Error('BETTER_AUTH_URL is not set');
+}
 
 export const auth = betterAuth({
-	baseURL: BACKEND_URL,
-	basePath: '/api/auth',
-	trustedOrigins: [
-		FRONTEND_URL,
-		'https://auth-widget.pages.dev',
-		'http://localhost:3000',
-	],
 	database: db,
+	baseURL: BETTER_AUTH_URL,
+	basePath: '/auth',
+	// trustedOrigins: ['http://localhost:3000', 'http://localhost:5176'],
 	emailAndPassword: {
 		enabled: true,
 	},
