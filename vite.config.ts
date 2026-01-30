@@ -27,9 +27,11 @@ export default defineConfig(({ mode }) => {
 		define: isWidgetBuild
 			? {
 					'process.env.NODE_ENV': JSON.stringify('production'),
-					'process.env.FRONTEND_URL': JSON.stringify('http://localhost:3000/'),
+					'process.env.FRONTEND_URL': JSON.stringify(
+						'https://auth-widget.pages.dev/'
+					),
 					'process.env.VITE_API_BASE_URL': JSON.stringify(
-						'http://localhost:5173/'
+						'https://auth-widget-0ni.pages.dev/'
 					),
 				}
 			: undefined,
