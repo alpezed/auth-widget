@@ -8,7 +8,7 @@ if (!API_BASE_URL) {
 }
 
 export const authClient = createAuthClient({
-	baseURL: API_BASE_URL,
+	baseURL: 'https://auth-widget-0ni.pages.dev/',
 	basePath: '/auth',
 	// fetchOptions: {
 	// 	credentials: 'include',

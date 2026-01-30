@@ -9,7 +9,7 @@ if (!BETTER_AUTH_URL) {
 
 export const auth = betterAuth({
 	database: db,
-	baseURL: BETTER_AUTH_URL,
+	baseURL: 'https://auth-widget-0ni.pages.dev/',
 	basePath: '/auth',
 	// trustedOrigins: ['http://localhost:3000', 'http://localhost:5176'],
 	emailAndPassword: {
