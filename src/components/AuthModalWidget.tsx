@@ -40,9 +40,9 @@ export function AuthModalWidget({
 	const authClient = useMemo(
 		() =>
 			baseURL
-				? createAuthClient({ basePath: '/auth', baseURL })
+				? createAuthClient({ basePath: '/api/auth', baseURL })
 				: defaultAuthClient,
-		[baseURL],
+		[baseURL]
 	);
 
 	const resetForm = () => {

@@ -190,9 +190,13 @@
 		<script src="https://auth-widget.pages.dev/lib/auth-widget.js"></script>
 
 		<script>
+			const urlParams = new URLSearchParams(window.location.search);
+			const devMode = urlParams.get('dev');
 			// Configure the widget: set baseURL to your auth server (required when embedded on another origin)
 			window.AuthModalWidget.configure({
-				baseURL: 'https://auth-widget-0ni.pages.dev/',
+				baseURL: devMode
+					? 'http://localhost:5176/'
+					: 'https://auth-widget-0ni.pages.dev/',
 				onSignIn: function (data) {
 					console.log('Sign in attempt:', data);
 					alert('Sign in with: ' + data.email);

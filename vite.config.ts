@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
 			devServer({
 				entry: './src/routes/auth.ts',
 				// Only handle /auth/* in Hono; let Vite serve SPA (/, /about, etc.)
-				exclude: [/^(?!\/auth)/, ...defaultOptions.exclude],
+				exclude: [/^(?!\/api)/, ...defaultOptions.exclude],
 			}),
 		],
 		// Define process.env.NODE_ENV for browser compatibility
