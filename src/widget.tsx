@@ -8,6 +8,9 @@ let container: HTMLDivElement | null = null;
 let currentMode: 'signin' | 'signup' | null = null;
 let isOpen = false;
 
+// Auth API base URL (for embedded widget; when not set, auth-client uses same origin)
+let authBaseURL: string | null = null;
+
 // Callbacks
 let onSignIn: ((data: { email: string; password: string }) => void) | null =
 	null;
@@ -45,6 +48,7 @@ function render() {
 				currentMode = mode;
 				render();
 			}}
+			baseURL={authBaseURL ?? undefined}
 			onSignIn={onSignIn || undefined}
 			onSignUp={onSignUp || undefined}
 			onForgotPassword={onForgotPassword || undefined}
@@ -83,9 +87,12 @@ const AuthModalWidgetAPI = {
 	},
 
 	/**
-	 * Configure callbacks for auth events
+	 * Configure callbacks and auth API URL for embedded widget.
+	 * Set baseURL to your auth server (e.g. https://api.example.com) when the widget
+	 * is embedded on a different origin.
 	 */
 	configure(options: {
+		baseURL?: string;
 		onSignIn?: (data: { email: string; password: string }) => void;
 		onSignUp?: (data: {
 			email: string;
@@ -96,6 +103,7 @@ const AuthModalWidgetAPI = {
 		onForgotPassword?: (email: string) => void;
 		onSocialLogin?: (provider: 'google' | 'github') => void;
 	}) {
+		if (options.baseURL !== undefined) authBaseURL = options.baseURL || null;
 		if (options.onSignIn) onSignIn = options.onSignIn;
 		if (options.onSignUp) onSignUp = options.onSignUp;
 		if (options.onClose) onClose = options.onClose;
@@ -131,6 +139,7 @@ const AuthModalWidgetAPI = {
 		}
 		isOpen = false;
 		currentMode = null;
+		authBaseURL = null;
 		onSignIn = null;
 		onSignUp = null;
 		onClose = null;

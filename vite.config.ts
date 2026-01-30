@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import { resolve } from 'path';
+import devServer, { defaultOptions } from '@hono/vite-dev-server';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -16,6 +17,11 @@ export default defineConfig(({ mode }) => {
 			}),
 			// Inject CSS into JS for the widget build (single file distribution)
 			...(isWidgetBuild ? [cssInjectedByJsPlugin()] : []),
+			devServer({
+				entry: './src/routes/auth.ts',
+				// Only handle /auth/* in Hono; let Vite serve SPA (/, /about, etc.)
+				exclude: [/^(?!\/auth)/, ...defaultOptions.exclude],
+			}),
 		],
 		// Define process.env.NODE_ENV for browser compatibility
 		define: isWidgetBuild
